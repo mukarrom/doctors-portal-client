@@ -8,7 +8,9 @@ const AvailableAppointments = ({ date }) => {
 	const [treatment, setTreatment] = useState(null);
 
 	useEffect(() => {
-		fetch('http://localhost:5000/services')
+		fetch(
+			'https://doctors-portal-server-6rx21wxn3-mukarrom.vercel.app/services'
+		)
 			.then(res => res.json())
 			.then(data => setServices(data));
 	}, []);
