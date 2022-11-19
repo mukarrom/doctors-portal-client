@@ -7,18 +7,18 @@ const ServiceCard = ({ service, setTreatment }) => {
 			<div className="card-body">
 				<h2 className="card-title text-secondary">{name}</h2>
 				<p className="">
-					{slots.length ? (
+					{slots?.length ? (
 						<span className="">{slots[0]}</span>
 					) : (
 						<span className="text-red-400">Try another day</span>
 					)}
 				</p>
 				<p className="">
-					{slots.length} {slots.length > 0 ? 'spaces' : 'space'} available
+					{slots?.length} {slots?.length > 0 ? 'spaces' : 'space'} available
 				</p>
 				<div className="card-actions justify-center">
 					<label
-						disabled={slots.length === 0}
+						disabled={slots?.length === 0}
 						htmlFor="booking-modal"
 						className="btn btn-secondary text-white"
 						onClick={() => setTreatment(service)}
