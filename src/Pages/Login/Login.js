@@ -6,11 +6,15 @@ import {
 import auth from '../../firebase.init';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import useToken from '../../hooks/useToken';
 
 const Login = () => {
 	const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
 	const [signInWithEmailAndPassword, user, loading, error] =
 		useSignInWithEmailAndPassword(auth);
+
+	// useToken custom hooks
+	const [token] = useToken(user || gUser);
 
 	const {
 		register,
@@ -25,6 +29,7 @@ const Login = () => {
 	let loginError;
 	let from = location.state?.from?.pathname || '/';
 
+	// if loading
 	if (gLoading || loading) {
 		loadingButton = (
 			<button className="btn loading w-full max-w-xs" type="submit">
@@ -36,17 +41,20 @@ const Login = () => {
 			<input className="btn w-full max-w-xs" type="submit" value="Login" />
 		);
 	}
+
+	// if error
 	if (gError || error) {
 		loginError = (
 			<p className="text-red-500">{gError?.message || error?.message}</p>
 		);
 	}
 
+	// if token exists
 	useEffect(() => {
-		if (user || gUser) {
+		if (token) {
 			navigate(from, { replace: true });
 		}
-	}, [from, navigate, user, gUser]);
+	}, [from, navigate, token]);
 
 	const onSubmit = data => {
 		signInWithEmailAndPassword(data.email, data.password);
@@ -76,7 +84,7 @@ const Login = () => {
 										message: 'Email is Required',
 									},
 									pattern: {
-										value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+										value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
 										message: 'Provide a valid Email',
 									},
 								})}

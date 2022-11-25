@@ -7,12 +7,17 @@ import {
 import auth from '../../firebase.init';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+import useToken from '../../hooks/useToken';
 
 const Signup = () => {
 	const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
 	const [signInWithEmailAndPassword, user, loading, error] =
 		useCreateUserWithEmailAndPassword(auth);
 	const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+
+	// custom hook for saving new user information in database
+	// send user or gUser data to custom hook as argument
+	const [token] = useToken(user || gUser);
 
 	const {
 		register,
@@ -46,15 +51,15 @@ const Signup = () => {
 		);
 	}
 
-	if (user) {
-		console.log(user);
+	if (token) {
+		navigate('/appointment');
 	}
 
 	const onSubmit = async data => {
-		console.log(data);
+		// console.log(data);
 		await signInWithEmailAndPassword(data.email, data.password);
 		await updateProfile({ displayName: data.name });
-		navigate('/appointment');
+		// navigate('/appointment');
 	};
 
 	return (
@@ -104,7 +109,7 @@ const Signup = () => {
 										message: 'Email is Required',
 									},
 									pattern: {
-										value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+										value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
 										message: 'Provide a valid Email',
 									},
 								})}
