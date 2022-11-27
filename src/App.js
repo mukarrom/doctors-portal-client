@@ -14,13 +14,17 @@ import MyReview from './Pages/Dashboard/MyReview';
 import Users from './Pages/Dashboard/Users';
 import MyHistory from './Pages/Dashboard/MyHistory';
 import RequireAdmin from './Pages/Login/RequireAdmin';
+import AddDoctor from './Pages/Dashboard/AddDoctor';
+import ManageDoctor from './Pages/Dashboard/ManageDoctor';
 
 function App() {
 	return (
 		<div>
 			<Navbar />
 			<Routes>
+				{/* Home */}
 				<Route path="/" element={<Home />}></Route>
+				{/* Appointment */}
 				<Route
 					path="/appointment"
 					element={
@@ -29,6 +33,7 @@ function App() {
 						</RequireAuth>
 					}
 				/>
+				{/* Dashboard */}
 				<Route
 					path="/dashboard"
 					element={
@@ -37,14 +42,36 @@ function App() {
 						</RequireAuth>
 					}
 				>
+					{/* dashboard/ my appointment */}
 					<Route index element={<MyAppointment />} />
+					{/* dashboard/ my review */}
 					<Route path="/dashboard/review" element={<MyReview />} />
+					{/* dashboard/ my history */}
 					<Route path="/dashboard/history" element={<MyHistory />} />
+					{/* dashboard/ user */}
 					<Route
 						path="/dashboard/users"
 						element={
 							<RequireAdmin>
 								<Users />
+							</RequireAdmin>
+						}
+					/>
+					{/* dashboard/ add doctor */}
+					<Route
+						path="/dashboard/addDoctor"
+						element={
+							<RequireAdmin>
+								<AddDoctor />
+							</RequireAdmin>
+						}
+					/>
+					{/* dashboard/ manage doctor */}
+					<Route
+						path="/dashboard/manageDoctor"
+						element={
+							<RequireAdmin>
+								<ManageDoctor />
 							</RequireAdmin>
 						}
 					/>
