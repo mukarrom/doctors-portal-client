@@ -10,12 +10,12 @@ const ManageDoctor = () => {
 		isLoading,
 		refetch,
 	} = useQuery(['doctors'], () =>
-		fetch('http://localhost:9000/doctors', {
+		fetch('https://doctors-portal-server-puce.vercel.app/doctors', {
 			method: 'GET',
 			headers: {
 				authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
-		}).then(res => res.json())
+		}).then((res) => res.json())
 	);
 
 	if (isLoading) {
@@ -36,7 +36,7 @@ const ManageDoctor = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{doctors.map(doctor => (
+						{doctors.map((doctor) => (
 							<tr key={doctor._id}>
 								<td>
 									<div className="flex items-center space-x-3">

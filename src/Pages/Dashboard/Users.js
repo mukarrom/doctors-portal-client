@@ -9,12 +9,12 @@ const Users = () => {
 		isLoading,
 		refetch,
 	} = useQuery(['users'], () =>
-		fetch('http://localhost:9000/user', {
+		fetch('https://doctors-portal-server-puce.vercel.app/user', {
 			method: 'GET',
 			headers: {
 				authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
-		}).then(res => res.json())
+		}).then((res) => res.json())
 	);
 	if (isLoading) {
 		return <Loading />;
@@ -33,7 +33,7 @@ const Users = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{users.map(user => (
+						{users.map((user) => (
 							<UsersRow key={user?._id} user={user} refetch={refetch} />
 						))}
 					</tbody>

@@ -5,19 +5,19 @@ const UsersRow = ({ user, refetch }) => {
 	const { email, role } = user;
 
 	const makeAdmin = () => {
-		fetch(`http://localhost:9000/user/admin/${email}`, {
+		fetch(`https://doctors-portal-server-puce.vercel.app/user/admin/${email}`, {
 			method: 'PUT',
 			headers: {
 				authorization: `Bearer ${localStorage.getItem('accessToken')}`,
 			},
 		})
-			.then(res => {
+			.then((res) => {
 				if (res.status === 403) {
 					toast.error('Failed to make an admin');
 				}
 				return res.json();
 			})
-			.then(data => {
+			.then((data) => {
 				if (data.modifiedCount > 0) {
 					toast.success('Successfully made admin', email);
 					refetch();

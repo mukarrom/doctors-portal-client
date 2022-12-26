@@ -13,7 +13,9 @@ const AddDoctor = () => {
 	} = useForm();
 	// react query
 	const { data: services, isLoading } = useQuery(['services'], () =>
-		fetch('http://localhost:9000/services').then(res => res.json())
+		fetch('https://doctors-portal-server-puce.vercel.app/services').then(
+			(res) => res.json()
+		)
 	);
 
 	if (isLoading) {
@@ -24,7 +26,7 @@ const AddDoctor = () => {
 	 */
 	// const myKey = 'f49ab4cb58a5ae6bbc130fa701be81a2';
 	const formData = new FormData();
-	const onSubmit = async data => {
+	const onSubmit = async (data) => {
 		if (data && data.image[0]) {
 			formData.append('image', data.image[0]);
 			console.log('upload success');
@@ -39,8 +41,8 @@ const AddDoctor = () => {
 			method: 'POST',
 			body: formData,
 		})
-			.then(res => res.json())
-			.then(result => {
+			.then((res) => res.json())
+			.then((result) => {
 				if (result.success) {
 					const img = result.data.url;
 					const doctor = {
@@ -50,7 +52,7 @@ const AddDoctor = () => {
 						img: img,
 					};
 					// send to your database
-					fetch('http://localhost:9000/doctors', {
+					fetch('https://doctors-portal-server-puce.vercel.app/doctors', {
 						method: 'POST',
 						headers: {
 							'content-type': 'application/json',
@@ -58,8 +60,8 @@ const AddDoctor = () => {
 						},
 						body: JSON.stringify(doctor),
 					})
-						.then(res => res.json())
-						.then(insertedData => {
+						.then((res) => res.json())
+						.then((insertedData) => {
 							if (insertedData.insertedId) {
 								reset();
 								toast.success('The doctor added in database successfully');
@@ -141,7 +143,7 @@ const AddDoctor = () => {
 						{...register('specialty')}
 						className="select input-bordered w-full max-w-xs"
 					>
-						{services.map(service => (
+						{services.map((service) => (
 							<option key={service._id} value={service.name}>
 								{service.name}
 							</option>

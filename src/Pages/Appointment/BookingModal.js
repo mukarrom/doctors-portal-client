@@ -9,7 +9,7 @@ const BookingModal = ({ treatment, setTreatment, date, refetch }) => {
 	const [user] = useAuthState(auth);
 	const formattedDate = format(date, 'PP');
 
-	const handleOnSubmit = event => {
+	const handleOnSubmit = (event) => {
 		event.preventDefault();
 		const slot = event.target.slot.value;
 
@@ -23,15 +23,15 @@ const BookingModal = ({ treatment, setTreatment, date, refetch }) => {
 			phone: event.target.phone.value,
 		};
 
-		fetch('http://localhost:9000/booking', {
+		fetch('https://doctors-portal-server-puce.vercel.app/booking', {
 			method: 'POST',
 			headers: {
 				'content-type': 'application/json',
 			},
 			body: JSON.stringify(booking),
 		})
-			.then(res => res.json())
-			.then(data => {
+			.then((res) => res.json())
+			.then((data) => {
 				if (data.success) {
 					toast.success(`Appointment is set on ${formattedDate} at ${slot}`);
 				} else {

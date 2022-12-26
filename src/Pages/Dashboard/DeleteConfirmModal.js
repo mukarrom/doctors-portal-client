@@ -3,14 +3,17 @@ import { toast } from 'react-toastify';
 
 const DeleteConfirmModal = ({ deletingDoctor, refetch, setDeletingdoctor }) => {
 	const handleDelete = () => {
-		fetch(`http://localhost:9000/doctors/${deletingDoctor.email}`, {
-			method: 'DELETE',
-			headers: {
-				authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-			},
-		})
-			.then(res => res.json())
-			.then(data => {
+		fetch(
+			`https://doctors-portal-server-puce.vercel.app/doctors/${deletingDoctor.email}`,
+			{
+				method: 'DELETE',
+				headers: {
+					authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+				},
+			}
+		)
+			.then((res) => res.json())
+			.then((data) => {
 				if (data.deletedCount) {
 					toast.success(`Doctor ${deletingDoctor.name} deleted successfully`);
 					setDeletingdoctor(null);

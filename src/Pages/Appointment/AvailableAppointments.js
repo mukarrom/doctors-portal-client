@@ -16,9 +16,9 @@ const AvailableAppointments = ({ date }) => {
 		isLoading,
 		refetch,
 	} = useQuery(['available', formattedDate], () =>
-		fetch(`http://localhost:9000/available?date=${formattedDate}`).then(res =>
-			res.json()
-		)
+		fetch(
+			`https://doctors-portal-server-puce.vercel.app/available?date=${formattedDate}`
+		).then((res) => res.json())
 	);
 
 	if (isLoading) {
@@ -31,7 +31,7 @@ const AvailableAppointments = ({ date }) => {
 				Available appointment on {format(date, 'PP')}
 			</h4>
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-				{services?.map(service => (
+				{services?.map((service) => (
 					<ServiceCard
 						key={service._id}
 						service={service}
